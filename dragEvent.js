@@ -51,7 +51,7 @@ var move = function (dx, dy) {
 var up = function () {
     isDotUsed = false;
     this.isMoving = undefined;
-   // console.info(this.attr('cx'), this.attr('cy'))
+    console.info(this.attr('cx'), this.attr('cy'))
 };
 
 /**

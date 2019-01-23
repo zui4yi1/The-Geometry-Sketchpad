@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <title>draw geometry</title>
+    <script src="raphael-min.js"> </script>
+    
+    <style>
+        html {
+            font-size: 14px;
+        }
+        #menu {
+            width: 80px;
+            height: 400px;
+            position: absolute;
+            background-color: aquamarine;
+            left: 0;
+        }
+
+        #menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        #menu ul li {
+            margin: 12px 0;
+        }
+
+        #container {
+            width: 400px;
+            height: 400px;
+            background-color: aqua;
+            position: absolute;
+            left: 82px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div id="menu">
+        <ul>
+            <li onclick="ECreateDot()">创建点</li>
+            <li onclick="ECreateSolidLine()">连接实线</li>
+            <li onclick="ECreateDashLine()">连接虚线</li>
+            <li onclick="ECreateCrossDot()">获取交点</li>
+            <li>删除线</li>
+            <li onclick="EClearSelectDot()">清空选中点</li>
+            <li onclick="EClearSelectLine()">清空选中线</li>
+            <li onclick="ECreateLineDot()">创建线上点</li>
+
+        </ul>
+
+    </div>
+    <div id="container"></div>
+
+    <script src="varible.js"></script>
+    <script src="line.js"></script>
+    <script src="dot.js"></script>
+    <script src="event.js"></script>
+    
+    <script src="dragEvent.js"> </script>
+    <script src="index.js"> </script>
+</body>
+
+</html>

@@ -29,7 +29,7 @@ var ECreateLineDot = function () {
 
     if (selectedLine.length != 1) return;
 
-    createLineDot(selectedLine);
+    var dot = createLineDot(selectedLine);
     dot.parentLine = selectedLine;
 };
 

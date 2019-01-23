@@ -44,12 +44,14 @@ var test3 = function () {
 
 };
 var test4 = function () {
-    createPoint(199, 298);
-    createPoint(96, 294);
-    createPoint(89, 226);
-    createPoint(133, 167);
-    createPoint(203, 187);
-    createPoint(249, 237);
+    createPoint(43, 319);
+    createPoint(63, 257);
+    createPoint(136, 230); 
+    createPoint(177, 249);
+
+
+    createPoint(188, 280); 
+    createPoint(153, 320);
 
     createLine(0, 1);
     createLine(1, 2);

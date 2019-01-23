@@ -107,6 +107,7 @@ var createLineDot = function (selectedLine) {
     dot.rateBaseDot = lineDots[0]; // 设置该点比例关系的基点准
     dot.relativeDot = lineDots[1];
     dot.rate = 0.5;
+    return dot;
 }
 
 /**

@@ -7,8 +7,8 @@ var createLine = function (inx1, inx2) {
         stroke: 'blue',
         'stroke-width': '3px'
     });
-    b.click(selectLine);
-    b.id = inx1 + '_' + inx2;
+    b.click(ESelectLine);
+    b.id = [inx1, inx2].sort().join('_');
 
     lines.push({
         id: b.id,
@@ -35,7 +35,7 @@ var rePathLine = function (lineId) {
         stroke: 'blue',
         'stroke-dasharray': '- '
     });
-    b.click(selectLine);
+    b.click(ESelectLine);
     b.id = lineId;
     lines.push({
         id: lineId,
@@ -61,7 +61,7 @@ var ECreateSolidLine = function () {
         stroke: 'blue',
         'stroke-width': '3px'
     });
-    b.click(selectLine);
+    b.click(ESelectLine);
     b.id = inx1 + '_' + inx2;
     lines.push({
         id: b.id,
@@ -85,7 +85,7 @@ var createSolidLine2 = function (pdots, curDotInx, attr) {
         stroke: 'blue',
         'stroke-width': '3px'
     });
-    b.click(selectLine);
+    b.click(ESelectLine);
     b.id = inx1 + '_' + inx2;
     lines.push({
         id: b.id,
@@ -104,7 +104,7 @@ var createDashLine = function (inx1, inx2) {
         'stroke-dasharray': '- ' //虚线没法设置宽度
     });
     b.id = inx1 + '_' + inx2;
-    b.click(selectLine);
+    b.click(ESelectLine);
     lines.push({
         id: b.id,
         isActive: dots[inx1].isActive || dots[inx2].isActive ? true : false,
@@ -126,7 +126,7 @@ var ECreateDashLine = function () {
         'stroke-dasharray': '- ' //虚线没法设置宽度
     });
     b.id = inx1 + '_' + inx2;
-    b.click(selectLine);
+    b.click(ESelectLine);
     lines.push({
         id: b.id,
         isActive: dots[inx1].isActive || dots[inx2].isActive ? true : false,
@@ -152,7 +152,7 @@ var createDashLine2 = function (pdots, dotInx, attr) {
         'stroke-dasharray': '- '
     });
     b.id = inx1 + '_' + inx2;
-    b.click(selectLine);
+    b.click(ESelectLine);
     lines.push({
         id: b.id,
         isActive: dots[inx1].isActive || dots[inx2].isActive ? true : false,
@@ -191,7 +191,7 @@ var addExpandingDashedLine = function (lineId, crossDot) {
             stroke: 'blue',
             'stroke-dasharray': '- '
         });
-        b.click(selectLine);
+        b.click(ESelectLine);
         b.id = [left, crossDot.curDotInx].sort().join('_');
         lines.push({
             id: b.id,
@@ -207,7 +207,7 @@ var addExpandingDashedLine = function (lineId, crossDot) {
             stroke: 'blue',
             'stroke-dasharray': '- '
         });
-        b.click(selectLine);
+        b.click(ESelectLine);
         b.id = [right, crossDot.curDotInx].sort().join('_');
         lines.push({
             id: b.id,
@@ -244,7 +244,7 @@ var addActiveDashedLine = function (posOps, activeDot) {
             stroke: 'blue',
             'stroke-dasharray': '- '
         });
-        b.click(selectLine);
+        b.click(ESelectLine);
         b.id = [left.curDotInx, activeDot.curDotInx].sort().join('_');
         lines.push({
             id: b.id,
@@ -259,7 +259,7 @@ var addActiveDashedLine = function (posOps, activeDot) {
             stroke: 'blue',
             'stroke-dasharray': '- '
         });
-        b.click(selectLine);
+        b.click(ESelectLine);
         b.id = [right.curDotInx, activeDot.curDotInx].sort().join('_');
         lines.push({
             id: b.id,
@@ -294,7 +294,7 @@ var addDashedLine = function (lineId, attr, curDot) {
             stroke: 'blue',
             'stroke-dasharray': '- '
         });
-        b.click(selectLine);
+        b.click(ESelectLine);
         b.id = [left, curDot.curDotInx].sort().join('_');
         lines.push({
             id: b.id,
@@ -309,7 +309,7 @@ var addDashedLine = function (lineId, attr, curDot) {
             stroke: 'blue',
             'stroke-dasharray': '- '
         });
-        b.click(selectLine);
+        b.click(ESelectLine);
         b.id = [right, curDot.curDotInx].sort().join('_');
         lines.push({
             id: b.id,

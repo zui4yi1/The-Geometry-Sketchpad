@@ -1,10 +1,19 @@
-function selectLine() {
-    // 暂只是单向选中，不做toggle选择
-    if (selectedLine.length >= 2 || (selectedLine.length == 1 && selectedLine[0] == this.id))
+function selectLine(inx1, inx2) {
+    var lineId = [inx1, inx2].sort().join('_');
+    if (selectedLine.length >= 2 || selectedLine.indexOf(lineId) > -1) {
+        console.info('most 2 lines can be selected, or the line has been selected');
         return;
-    this.attr({ stroke: 'red' });
-    selectedLine.push(this.id);
+    }
+    var pn = paper.getById(lineId);
+    pn.attr({ stroke: 'red' });
+    selectedLine.push(lineId);
 }
+
+function ESelectLine() {
+    var ds = this.id.split('_')
+    selectLine(ds[0], ds[1]);
+}
+
 var ECreateCrossDot = function () {
     createCrossDot(selectedLine);
 };
@@ -41,4 +50,17 @@ function EClearSelectDot() {
         });
     }
     lineObj.dots = [];
+}
+
+function printDots() {
+    return dots.map(function (d) {
+        return d.curDotInx + ',' + chars[d.curDotInx] + ',' + parseInt(d.attr('cx')) + ',' + parseInt(d.attr('cy'));
+
+    });
+}
+function printLines() {
+    return lines.map(function (d) {
+        return d.id + ',' + chars[d.dots[0]] + chars[d.dots[1]];
+
+    });
 }

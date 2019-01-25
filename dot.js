@@ -6,6 +6,7 @@ var createCrossDot = function (lines) {
 
     //TODO BUG 未进行重复验证
     var pos = getCrossPositon(lines);
+    if (!pos) return;
     if (pos) {
         var dot = createPoint(pos.x, pos.y, pos.lineIds, true);
         dot.isCrossDot = true;
@@ -18,7 +19,7 @@ var createCrossDot = function (lines) {
 }
 
 /**
- * 两线交点的位置，也要分静态和动态的。。。
+ * 两线交点的位置
  * @param {*} lineIds 
  */
 var getCrossPositon = function (lineIds) {
@@ -33,11 +34,27 @@ var getCrossPositon = function (lineIds) {
         dot3 = dots[line2[0]],
         dot4 = dots[line2[1]];
 
-    var k1 = (dot2.attr('cy') - dot1.attr('cy')) / (dot2.attr('cx') - dot1.attr('cx')); // 暂时不考虑垂线情况
-    var k2 = (dot4.attr('cy') - dot3.attr('cy')) / (dot4.attr('cx') - dot3.attr('cx'));
+    var x, y;
+    if (dot2.attr('cx') == dot1.attr('cx') && dot4.attr('cx') == dot3.attr('cx')) { // 两条线都是垂线的情况
+        // 垂线无交点
+        return null;
+    } else if (dot2.attr('cx') == dot1.attr('cx')) {// 两点dot1和dot2构成垂线
+        var k2 = (dot4.attr('cy') - dot3.attr('cy')) / (dot4.attr('cx') - dot3.attr('cx'));
+        x = dot2.attr('cx');
+        y = k2 * (x - dot3.attr('cx')) + dot3.attr('cy');
+    } else if (dot4.attr('cx') == dot3.attr('cx')) {// 两点dot3和dot4构成垂线
+        var k1 = (dot2.attr('cy') - dot1.attr('cy')) / (dot2.attr('cx') - dot1.attr('cx'));
+        x = dot4.attr('cx');
+        y = k1 * (x - dot1.attr('cx')) + dot1.attr('cy');
+    } else { // 无垂线的情况
+        var k1 = (dot2.attr('cy') - dot1.attr('cy')) / (dot2.attr('cx') - dot1.attr('cx'));
+        var k2 = (dot4.attr('cy') - dot3.attr('cy')) / (dot4.attr('cx') - dot3.attr('cx'));
 
-    var x = (k1 * dot1.attr('cx') - k2 * dot3.attr('cx') - dot1.attr('cy') + dot3.attr('cy')) / (k1 - k2);
-    var y = k1 * (x - dot1.attr('cx')) + dot1.attr('cy');
+        if (k1 == k2) return null; // 平行线无交点
+
+        x = (k1 * dot1.attr('cx') - k2 * dot3.attr('cx') - dot1.attr('cy') + dot3.attr('cy')) / (k1 - k2);
+        y = k1 * (x - dot1.attr('cx')) + dot1.attr('cy');
+    }
     return {
         x: x,
         y: y,
@@ -46,14 +63,14 @@ var getCrossPositon = function (lineIds) {
 };
 
 
-var setLineDotPosition = function (curDot, lineId, curMoveDotInx) {
+var setLineDotPosition = function (curDot, lineId) {
 
     var base = curDot.rateBaseDot;
     var relt = curDot.relativeDot;
 
     var attr = {
         cx: dots[base].attr('cx') + (dots[relt].attr('cx') - dots[base].attr('cx')) * curDot.rate,
-        cy: dots[base].attr('cy') +  (dots[relt].attr('cy') - dots[base].attr('cy')) * curDot.rate
+        cy: dots[base].attr('cy') + (dots[relt].attr('cy') - dots[base].attr('cy')) * curDot.rate
     }
     curDot.attr(attr);
     setTextPos(curDot.curDotInx);
@@ -63,9 +80,10 @@ var setLineDotPosition = function (curDot, lineId, curMoveDotInx) {
 
 
 
-var setCrossDotPosition = function (curDot, lineId, curMoveDotInx, attr) {
+var setCrossDotPosition = function (curDot) {
 
     var pos = getCrossPositon(curDot.parentLine);
+    if (!pos) return;
     curDot.attr({
         cx: pos.x,
         cy: pos.y
@@ -116,7 +134,7 @@ var createLineDot = function (selectedLine) {
 var createPoint = function (x, y, lineIds, nodrag) {
     dots[dotInx] = paper.circle(x, y, 2.5).attr({
         'stroke-width': '5',
-        'stroke': 'blue'
+        'stroke': nodrag == true ? '#239823' : 'blue' // 两线的交点为绿点，不能手动移动
     });
     if (!nodrag) dots[dotInx].drag(move, start, up).toBack();
     dots[dotInx].curDotInx = dotInx;
@@ -125,6 +143,7 @@ var createPoint = function (x, y, lineIds, nodrag) {
         'font-size': '14px',
         'fill': '#0343ef'
     });
+    texts[dotInx].curDotInx = dotInx;
     setTextPos(dotInx);
     if (lineIds && lineIds.length > 0) {
         dots[dotInx].lineIds = lineIds;

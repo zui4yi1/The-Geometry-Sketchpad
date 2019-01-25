@@ -11,7 +11,7 @@ var move = function (dx, dy) {
         var lineId = this.lineIds[0];
 
         var inxs = lineId.split('_');
-        var left, right;   
+        var left, right;
         var rate;
         if (dots[inxs[0]].attr('cx') <= dots[inxs[1]].attr('cx')) {
             left = inxs[0], right = inxs[1];
@@ -23,7 +23,7 @@ var move = function (dx, dy) {
         var _y = dots[right].attr('cy') - dots[left].attr('cy');
         if (_x == 0) {// 垂直平移
             attr = { cx: this.cxx, cy: this.cyy + dy };
-            rate = (attr.cy - dots[left].attr('cy')) / (dots[right].attr('cy') - dots[left].attr('cy'));            
+            rate = (attr.cy - dots[left].attr('cy')) / (dots[right].attr('cy') - dots[left].attr('cy'));
         } else {
             attr = { cx: this.cxx + dx, cy: this.cyy + dx * _y / _x };
             rate = (attr.cx - dots[left].attr('cx')) / (dots[right].attr('cx') - dots[left].attr('cx'));
@@ -51,7 +51,7 @@ var move = function (dx, dy) {
 var up = function () {
     isDotUsed = false;
     this.isMoving = undefined;
-    console.info(this.attr('cx'), this.attr('cy'))
+    console.info('point '+ chars[this.curDotInx]+' new pos: ' + this.attr('cx') + ',' + this.attr('cy'));
 };
 
 /**
@@ -68,23 +68,12 @@ var reDrawLine = function (curDotInx, attr) {
         }
     }
     for (var i = 0; i < temLines.length; i++) {
-        var style = temLines[i].style;
-        var curDots = temLines[i].dots;
         var id = temLines[i].id;
 
         // 先更新动态节点
         moveActiveDot(id, curDotInx, attr);
 
-        clearLine(id);
-        var pn = paper.getById(id);
-        if (pn)
-            pn.remove();
-
-        if (style == 'solid') {
-            createSolidLine2(curDots, curDotInx, attr);
-        } else {
-            createDashLine2(curDots, curDotInx, attr);
-        }
+        rePathLine(id);
     }
 
 };
@@ -105,11 +94,11 @@ var moveActiveDot = function (lineId, curDotInx, attr) {
         var temp = dts[i];
 
         if (temp.isLineDot) {
-            setLineDotPosition(temp, lineId, curDotInx);
+            setLineDotPosition(temp, lineId);
 
         }
         else if (temp.isCrossDot) {
-            setCrossDotPosition(temp, lineId, curDotInx, attr);
+            setCrossDotPosition(temp);
         }
         moveActiveLine(temp);
     }

@@ -1,8 +1,4 @@
 paper = new Raphael(document.getElementById('container'), 400, 400);
-paper.rect(0, 360, 40, 40).attr({
-    'stroke-dasharray': ['-']
-});
-//ECreateDot();
 
 // 两线交战
 var test1 = function () {

@@ -55,12 +55,10 @@ function EClearSelectDot() {
 function printDots() {
     return dots.map(function (d) {
         return d.curDotInx + ',' + chars[d.curDotInx] + ',' + parseInt(d.attr('cx')) + ',' + parseInt(d.attr('cy'));
-
     });
 }
 function printLines() {
     return lines.map(function (d) {
         return d.id + ',' + chars[d.dots[0]] + chars[d.dots[1]];
-
     });
 }

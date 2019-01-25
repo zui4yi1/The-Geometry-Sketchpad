@@ -1,10 +1,10 @@
 
 /**
- * 创建两直线的交点
+ * create dot from the selected cross lines
  */
 var createCrossDot = function (lines) {
 
-    //TODO BUG 未进行重复验证
+    //TODO valididation for repeat
     var pos = getCrossPositon(lines);
     if (!pos) return;
     if (pos) {
@@ -12,14 +12,13 @@ var createCrossDot = function (lines) {
         dot.isCrossDot = true;
         dot.isActive = true;
         dot.parentLine = lines;
-        // 补虚线
+        // add expanding lines
         addExpandingDashedLine(pos.lineIds[0], dot);
         addExpandingDashedLine(pos.lineIds[1], dot);
     }
 }
 
 /**
- * 两线交点的位置
  * @param {*} lineIds 
  */
 var getCrossPositon = function (lineIds) {
@@ -35,22 +34,21 @@ var getCrossPositon = function (lineIds) {
         dot4 = dots[line2[1]];
 
     var x, y;
-    if (dot2.attr('cx') == dot1.attr('cx') && dot4.attr('cx') == dot3.attr('cx')) { // 两条线都是垂线的情况
-        // 垂线无交点
+    if (dot2.attr('cx') == dot1.attr('cx') && dot4.attr('cx') == dot3.attr('cx')) { // boths line are vertical        
         return null;
-    } else if (dot2.attr('cx') == dot1.attr('cx')) {// 两点dot1和dot2构成垂线
+    } else if (dot2.attr('cx') == dot1.attr('cx')) {// dot1 & dot2 is vertical
         var k2 = (dot4.attr('cy') - dot3.attr('cy')) / (dot4.attr('cx') - dot3.attr('cx'));
         x = dot2.attr('cx');
         y = k2 * (x - dot3.attr('cx')) + dot3.attr('cy');
-    } else if (dot4.attr('cx') == dot3.attr('cx')) {// 两点dot3和dot4构成垂线
+    } else if (dot4.attr('cx') == dot3.attr('cx')) {// dot3 & dot4 is vertical
         var k1 = (dot2.attr('cy') - dot1.attr('cy')) / (dot2.attr('cx') - dot1.attr('cx'));
         x = dot4.attr('cx');
         y = k1 * (x - dot1.attr('cx')) + dot1.attr('cy');
-    } else { // 无垂线的情况
+    } else { // no vertical lines
         var k1 = (dot2.attr('cy') - dot1.attr('cy')) / (dot2.attr('cx') - dot1.attr('cx'));
         var k2 = (dot4.attr('cy') - dot3.attr('cy')) / (dot4.attr('cx') - dot3.attr('cx'));
 
-        if (k1 == k2) return null; // 平行线无交点
+        if (k1 == k2) return null; // no cross point for parallel lines
 
         x = (k1 * dot1.attr('cx') - k2 * dot3.attr('cx') - dot1.attr('cy') + dot3.attr('cy')) / (k1 - k2);
         y = k1 * (x - dot1.attr('cx')) + dot1.attr('cy');
@@ -89,7 +87,6 @@ var setCrossDotPosition = function (curDot) {
         cy: pos.y
     });
     setTextPos(curDot.curDotInx);
-    // 重画虚线
     return [
         addExpandingDashedLine(pos.lineIds[0], curDot),
         addExpandingDashedLine(pos.lineIds[1], curDot)
@@ -98,22 +95,20 @@ var setCrossDotPosition = function (curDot) {
 };
 
 /**
- * 菜单事件，创建节点 
  */
 var ECreateDot = function () {
     if (isDotUsed)
         return;
     isDotUsed = true;
-    createPoint(20, 380); //在左下角的虚线框内创建一个节点
+    createPoint(20, 380); // create the new point at the left-bottom of the canvas
 }
 
 /**
- * 创建两线的中点
+ * create a new point on the selected line in the middle
  */
 var createLineDot = function (selectedLine) {
     if (selectedLine.length != 1) return;
 
-    //需要过滤重复
     var lineDots = selectedLine[0].replace('_', '');
     var x = (dots[lineDots[0]].attr('cx') + dots[lineDots[1]].attr('cx')) / 2;
     var y = (dots[lineDots[0]].attr('cy') + dots[lineDots[1]].attr('cy')) / 2;
@@ -122,21 +117,21 @@ var createLineDot = function (selectedLine) {
     dot.isLineDot = true;
     dot.isActive = true;
     dot.parentLine = selectedLine;
-    dot.rateBaseDot = lineDots[0]; // 设置该点比例关系的基点准
+    dot.rateBaseDot = lineDots[0];
     dot.relativeDot = lineDots[1];
     dot.rate = 0.5;
     return dot;
 }
 
 /**
- * 创建节点的底层函数
+ * the base funtion to create point
  */
 var createPoint = function (x, y, lineIds, nodrag) {
     dots[dotInx] = paper.circle(x, y, 2.5).attr({
         'stroke-width': '5',
-        'stroke': nodrag == true ? '#239823' : 'blue' // 两线的交点为绿点，不能手动移动
+        'stroke': nodrag == true ? '#239823' : 'blue' // note that cross-point can not be dragged and rendered green
     });
-    if (!nodrag) dots[dotInx].drag(move, start, up).toBack();
+    if (!nodrag) dots[dotInx].drag(move, start, up).toBack();  // note that cross-point can not be dragged and rendered green
     dots[dotInx].curDotInx = dotInx;
     dots[dotInx].dblclick(dblclick)
     texts[dotInx] = paper.text(x + 10, y, chars[dotInx]).attr({
@@ -152,7 +147,9 @@ var createPoint = function (x, y, lineIds, nodrag) {
     return dots[dotInx - 1];
 };
 
-//节点的双击事件
+/**
+ * dblclick event for points
+ */
 var dblclick = function () {
     if (!this.dblclicked) {
         if (lineObj.dots.length < 2) {
@@ -176,19 +173,9 @@ var dblclick = function () {
 }
 
 /**
- * 
- * @param {} curDot 可为点或索引
+ * set text positon for point
+ * @param {*} inx 
  */
-var dotPos = function (curDot) {
-    if (!isNaN(curDot)) { //如果是数字即点的索引，则转为点
-        curDot = dots[curDot]
-    }
-    return {
-        cx: curDot.attr('cx'),
-        cy: curDot.attr('cy')
-    };
-}
-
 var setTextPos = function (inx) {
     texts[inx].attr({
         x: dots[inx].attr('cx') + 12,

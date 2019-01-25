@@ -1,6 +1,6 @@
 paper = new Raphael(document.getElementById('container'), 400, 400);
 
-// 两线交战
+
 var test1 = function () {
     createPoint(231, 381);
     createPoint(99, 315);
@@ -42,11 +42,11 @@ var test3 = function () {
 var test4 = function () {
     createPoint(43, 319);
     createPoint(63, 257);
-    createPoint(136, 230); 
+    createPoint(136, 230);
     createPoint(177, 249);
 
 
-    createPoint(188, 280); 
+    createPoint(188, 280);
     createPoint(153, 320);
 
     createLine(0, 1);
@@ -63,14 +63,3 @@ var test4 = function () {
 };
 
 test4();
-
-
-
-
-
-
-
-
-
-
-

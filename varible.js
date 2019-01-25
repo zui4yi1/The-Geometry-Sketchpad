@@ -7,7 +7,7 @@ var isDotUsed = false;
 
 var selectedLine = [];
 
-var lineObj = { //选中点的对象，需要更换一下
+var lineObj = { //the obj for selected points, can be optimized
     dots: []
 };
 

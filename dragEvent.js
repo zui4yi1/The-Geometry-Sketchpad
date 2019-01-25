@@ -1,9 +1,9 @@
 var start = function () {
-    this.cxx = this.attr('cx'); //记录起始坐标
+    this.cxx = this.attr('cx');
     this.cyy = this.attr('cy');
     this.isMoving = true;
 };
-//拖动事件
+
 var move = function (dx, dy) {
     var curDotInx = this.curDotInx;
     var attr = {};
@@ -21,7 +21,7 @@ var move = function (dx, dy) {
 
         var _x = dots[right].attr('cx') - dots[left].attr('cx');
         var _y = dots[right].attr('cy') - dots[left].attr('cy');
-        if (_x == 0) {// 垂直平移
+        if (_x == 0) { // vertical
             attr = { cx: this.cxx, cy: this.cyy + dy };
             rate = (attr.cy - dots[left].attr('cy')) / (dots[right].attr('cy') - dots[left].attr('cy'));
         } else {
@@ -47,7 +47,6 @@ var move = function (dx, dy) {
     }
 
 };
-//拖动结束后的事件
 var up = function () {
     isDotUsed = false;
     this.isMoving = undefined;
@@ -55,8 +54,6 @@ var up = function () {
 };
 
 /**
- * 重画线
- * 点的位置已确定
  * @param {*} curDotInx 
  * @param {*} attr 
  */
@@ -70,7 +67,7 @@ var reDrawLine = function (curDotInx, attr) {
     for (var i = 0; i < temLines.length; i++) {
         var id = temLines[i].id;
 
-        // 先更新动态节点
+        // update the active dot
         moveActiveDot(id, curDotInx, attr);
 
         rePathLine(id);
@@ -78,8 +75,12 @@ var reDrawLine = function (curDotInx, attr) {
 
 };
 
-// 动态点，目前有线上点和两线交点两种
-// 动态点具有线的id的属性，是个数组
+/**
+ * update the active dot
+ * @param {*} lineId 
+ * @param {*} curDotInx 
+ * @param {*} attr 
+ */
 var moveActiveDot = function (lineId, curDotInx, attr) {
     var dts = [];
     for (var i = 0; i < dots.length; i++) {

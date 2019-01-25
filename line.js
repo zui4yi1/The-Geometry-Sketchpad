@@ -1,15 +1,15 @@
 /**
- * 创建线的统一方法
- * @param {*} inx1 点1的索引 
- * @param {*} inx2 点2的索引
- * @param {*} style 实线或虚线，不传默认实线
- * @returns 创建线的raphael对象
+ * the base funtion to create line
+ * @param {*} inx1
+ * @param {*} inx2
+ * @param {*} style solid or dashed, default is solid
+ * @returns raphael object
  */
 var createLine = function (inx1, inx2, style) {
 
     var lineId = [inx1, inx2].sort().join('_');
     if (paper.getById(lineId)) {
-        console.info('线已存在')
+        console.info('the Line is existing')
         return;
     }
 
@@ -42,7 +42,7 @@ var createLineByChar = function (char1, char2) {
 };
 
 /**
- * 重画动态线
+ * redraw line
  * @param {*} lineId 
  */
 var rePathLine = function (lineId) {
@@ -100,7 +100,7 @@ var ECreateDashLine = function () {
 
 
 /**
- * 添加延长虚线
+ * add expanding line with dashed style
  */
 var addExpandingDashedLine = function (lineId, crossDot) {
     var inxs = lineId.split('_');
@@ -125,10 +125,10 @@ var addExpandingDashedLine = function (lineId, crossDot) {
 
     if (dots[left].attr('cx') > crossDot.attr('cx')) {
         var b = createLine(left, crossDot.curDotInx, 'dashed');
-        return b.id; // 返回新增线的id
+        return b.id;
     } else if (dots[right].attr('cx') < crossDot.attr('cx')) {
         var b = createLine(right, crossDot.curDotInx, 'dashed');
-        return b.id; // 返回新增线的id
+        return b.id;
     }
 };
 

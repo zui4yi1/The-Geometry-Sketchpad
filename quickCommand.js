@@ -16,7 +16,7 @@ function charInx(str) {
                 inx2 = texts[i].curDotInx;
             }
         }
-        return [inx1, inx2];
+        return [inx1, inx2].sort();
     }
 }
 
@@ -25,6 +25,11 @@ function removeObj(str) {
         return charInx(s);
     }).sort().join('_');
     var pn = paper.getById(id);
+    if (pn) pn.remove();
+}
+function removePoint(char) {
+    var inx = charInx(char);
+    var pn = paper.getById('dot_' + inx);
     if (pn) pn.remove();
 }
 
@@ -60,7 +65,7 @@ var selectDotByChar = function (char) {
  * @param {*} char1 'A' or 'AB'
  * @param {*} char2 'B' or undefined
  */
-var createLineDotByChar = function (char1, char2) {
+var createPointOnLineByChar = function (char1, char2) {
     if (!char2) {
         var strs = char1.split('');
         char1 = strs[0];
@@ -84,4 +89,8 @@ var selectTriangleArea = function (char1, char2, char3) {
         fill: '#1212A0'
     });
     b.id = [inx1, inx2, inx3].sort().join('_');
+};
+
+var createCrossDotByChar = function (str1, str2) {
+    createCrossDot([charInx(str1).join('_'), charInx(str2).join('_')])
 };

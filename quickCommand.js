@@ -33,6 +33,39 @@ function removePoint(char) {
     if (pn) pn.remove();
 }
 
+function hideObj(str) {
+    var id = str.split('').map(function (s) {
+        return charInx(s);
+    }).sort().join('_');
+    var pn = paper.getById(id);
+    pn.attr({
+        opacity: 0
+    })
+}
+function hidePoints() {
+    for (var i = 0; i < arguments.length; i++) {
+        var inx = charInx(arguments[i]);
+        dots[inx].attr({
+            opacity: 0
+        });
+        texts[inx].attr({
+            opacity: 0
+        })
+    }
+}
+
+function showPoints(){
+    for (var i = 0; i < arguments.length; i++) {
+        var inx = charInx(arguments[i]);
+        dots[inx].attr({
+            opacity: 1
+        });
+        texts[inx].attr({
+            opacity: 1
+        })
+    }
+}
+
 var selectLineByChar = function (char1, char2) {
     createLine(charInx(char1), charInx(char2));
 };

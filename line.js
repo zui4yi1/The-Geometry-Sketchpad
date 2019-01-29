@@ -14,7 +14,7 @@ var createLine = function (inx1, inx2, style) {
     }
 
     var b = paper.path('M ' + dots[inx1].attr('cx') + ' ' + dots[inx1].attr('cy') + ' L ' + dots[inx2].attr('cx') + ' ' + dots[inx2].attr('cy') + '');
-    var attr = style != 'dashed' ? { stroke: 'blue', 'stroke-width': '3px' } : { stroke: 'blue', 'stroke-dasharray': '- ' };
+    var attr = style != 'dashed' ? { stroke: 'blue', 'stroke-width': '1px' } : { stroke: 'blue', 'stroke-dasharray': '- ' };
     b.attr(attr);
   //  b.click(ESelectLine);
     b.id = lineId;

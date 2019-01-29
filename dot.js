@@ -133,7 +133,7 @@ var createPoint = function (x, y, lineIds, nodrag) {
     });
     if (!nodrag) dots[dotInx].drag(move, start, up).toBack();  // note that cross-point can not be dragged and rendered green
     dots[dotInx].curDotInx = dotInx;
-    dots[dotInx].dblclick(dblclick)
+//    dots[dotInx].dblclick(dblclick)
     texts[dotInx] = paper.text(x + 10, y, chars[dotInx]).attr({
         'font-size': '14px',
         'fill': '#0343ef'

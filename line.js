@@ -16,7 +16,7 @@ var createLine = function (inx1, inx2, style) {
     var b = paper.path('M ' + dots[inx1].attr('cx') + ' ' + dots[inx1].attr('cy') + ' L ' + dots[inx2].attr('cx') + ' ' + dots[inx2].attr('cy') + '');
     var attr = style != 'dashed' ? { stroke: 'blue', 'stroke-width': '3px' } : { stroke: 'blue', 'stroke-dasharray': '- ' };
     b.attr(attr);
-    b.click(ESelectLine);
+  //  b.click(ESelectLine);
     b.id = lineId;
 
     lines.push({
@@ -28,18 +28,7 @@ var createLine = function (inx1, inx2, style) {
     return b;
 };
 
-var createLineByChar = function (char1, char2) {
-    var inx1, inx2;
-    for (var i = 0; i < texts.length; i++) {
-        if (texts[i].attr('text') == char1.toUpperCase()) {
-            inx1 = i;
-        }
-        if (texts[i].attr('text') == char2.toUpperCase()) {
-            inx2 = i;
-        }
-    }
-    createLine(inx1, inx2);
-};
+
 
 /**
  * redraw line
@@ -74,19 +63,7 @@ var createDashLine = function (inx1, inx2) {
     createLine(inx1, inx2, 'dashed');
 };
 
-var createDashLineByChar = function (char1, char2) {
 
-    var inx1, inx2;
-    for (var i = 0; i < texts.length; i++) {
-        if (texts[i].attr('text') == char1.toUpperCase()) {
-            inx1 = i;
-        }
-        if (texts[i].attr('text') == char2.toUpperCase()) {
-            inx2 = i;
-        }
-    }
-    createDashLine(inx1, inx2);
-};
 
 var ECreateDashLine = function () {
     var inx1, inx2;

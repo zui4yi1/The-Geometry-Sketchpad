@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <title>The Geometer's Sketchpad</title>
     <script src="raphael-min.js"> </script>
-
     <style>
         html {
             font-size: 14px;
@@ -13,7 +12,7 @@
 
         #menu {
             width: 160px;
-            height: 400px;
+            height: 500px;
             position: absolute;
             background-color: aquamarine;
             left: 0;
@@ -34,19 +33,19 @@
         }
 
         #container {
-            width: 400px;
-            height: 400px;
+            width: 500px;
+            height: 500px;
             background-color: aqua;
             position: absolute;
             left: 162px;
         }
 
         #right {
-            width: 120px;
-            height: 400px;
+            width: 180px;
+            height: 500px;
             position: absolute;
             background-color: aquamarine;
-            left: 564px;
+            left: 664px;
         }
     </style>
 
@@ -57,33 +56,31 @@
     <div id="menu">
         <ul>
             <li onclick="ECreateDot()">create point</li>
-            <li onclick="ECreateSolidLine()">connect solid line</li>
-            <li onclick="ECreateDashLine()">connect dashed line</li>
-            <li onclick="ECreateCrossDot()">create point of selected cross lines</li>
+            <li>-------</li>
             <li onclick="EClearSelectDot()">clear selected points</li>
+            <li>-------</li>
             <li onclick="EClearSelectLine()">clear selected lines</li>
-            <li onclick="ECreateLineDot()">create point on selected line</li>
-
         </ul>
-
     </div>
     <div id="container"></div>
     <div id="right">
-        <h3>You can USE the following functions to create points and lines in the console</h3>
+        <h3>Quick Command</h3>
         <ul>
-            <li>createPoint</li>
-            <li>createLine</li>
             <li>createLineByChar</li>
-            <li>createDashLine</li>
             <li>createDashLineByChar</li>
-            <li>createLineDot</li>
-            <li>createCrossDot</li>
-
-
-
+            <li>-------</li>
+            <li>createPointOnLineByChar</li>
+            <li>createCrossDotByChar</li>
+            <li>-------</li>
+            <li>selectTriangleArea</li>
+            <li>selectDotByChar</li>
+            <li>selectLineByChar</li>
+            <li>-------</li>
+            <li>hidePoints</li>
+            <li>hideObj</li>
+            <li>removeObj</li>
 
         </ul>
-
     </div>
 
     <script src="varible.js"></script>
@@ -92,6 +89,7 @@
     <script src="event.js"></script>
 
     <script src="dragEvent.js"> </script>
+    <script src="quickCommand.js"> </script>
     <script src="index.js"> </script>
 </body>
 

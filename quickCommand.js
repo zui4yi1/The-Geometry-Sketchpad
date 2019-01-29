@@ -27,6 +27,11 @@ function removeObj(str) {
     var pn = paper.getById(id);
     if (pn) pn.remove();
 }
+
+/**
+ * don't use this function
+ * @param {*} char 
+ */
 function removePoint(char) {
     var inx = charInx(char);
     var pn = paper.getById('dot_' + inx);
@@ -52,7 +57,7 @@ function hidePoints() {
             opacity: 0
         })
     }
-}
+};
 
 function showPoints(){
     for (var i = 0; i < arguments.length; i++) {
@@ -64,7 +69,33 @@ function showPoints(){
             opacity: 1
         })
     }
-}
+};
+
+var createLineByChar = function (char1, char2) {
+    var inx1, inx2;
+    for (var i = 0; i < texts.length; i++) {
+        if (texts[i].attr('text') == char1.toUpperCase()) {
+            inx1 = i;
+        }
+        if (texts[i].attr('text') == char2.toUpperCase()) {
+            inx2 = i;
+        }
+    }
+    createLine(inx1, inx2);
+};
+var createDashLineByChar = function (char1, char2) {
+
+    var inx1, inx2;
+    for (var i = 0; i < texts.length; i++) {
+        if (texts[i].attr('text') == char1.toUpperCase()) {
+            inx1 = i;
+        }
+        if (texts[i].attr('text') == char2.toUpperCase()) {
+            inx2 = i;
+        }
+    }
+    createDashLine(inx1, inx2);
+};
 
 var selectLineByChar = function (char1, char2) {
     createLine(charInx(char1), charInx(char2));

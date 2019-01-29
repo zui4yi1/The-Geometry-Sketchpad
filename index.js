@@ -1,4 +1,4 @@
-paper = new Raphael(document.getElementById('container'), 400, 400);
+paper = new Raphael(document.getElementById('container'), 500, 500);
 
 
 var test1 = function () {
